@@ -6,6 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import Header from './Header'
 import Content from './Content'
 import PropTypes from 'prop-types'
+import { Provider } from './react-redux'
 
 function createStore(reducer) {
     let state = null
@@ -36,14 +37,6 @@ const store = createStore(themeReducer)
 
 class Index extends Component {
 
-    static childContextTypes = {
-        store: PropTypes.object
-    }//getChildContext 指定的传递给子组件的属性需要先通过 childContextTypes 来指定，不然会产生错误。
-
-    getChildContext() {
-        return { store }
-    }//通过withContext和getChildContext指定的context元素都可以被子组件引用。
-
     render() {
         return (
             <div>
@@ -51,10 +44,9 @@ class Index extends Component {
                 <Content />
             </div>
         )
-
     }
 }
 
 
-ReactDOM.render(<Index />, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><Index /></Provider>, document.getElementById('root'));
 registerServiceWorker();

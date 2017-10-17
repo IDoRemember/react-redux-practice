@@ -42,5 +42,27 @@ export const connect = (mapStateToProps, mapDispatchToProps) => (WrappedComponen
     }
     return Connect
 }
-
 //connect 现在是接受一个参数 mapStateToProps，然后返回一个函数，这个返回的函数才是高阶组件。它会接受一个组件作为参数，然后用 Connect 把组件包装以后再返回。
+
+export class Provider extends Component {
+    static PropTypes = {
+        store: PropTypes.object,
+        children: PropTypes.any
+    }
+
+    static childContextTypes = {
+        store: PropTypes.object
+    }
+
+    getChildContext() {
+        return {
+            store: this.props.store
+        }
+    }
+
+    render() {
+        return (
+            <div>{this.props.children}</div>
+        )
+    }
+}
